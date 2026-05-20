@@ -227,7 +227,7 @@ const HomePage = () => {
       profile: true,
       proxy: true,
       network: true,
-      mode: true,
+      mode: false,
       traffic: false,
       clashinfo: false,
       systeminfo: false,
