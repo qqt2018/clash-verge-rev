@@ -46,28 +46,10 @@ export const navItems = [
     Component: ProfilesPage,
   },
   {
-    label: 'layout.components.navigation.tabs.connections',
-    path: '/connections',
-    icon: [<LanguageRoundedIcon key="mui" />, <ConnectionsSvg key="svg" />],
-    Component: ConnectionsPage,
-  },
-  {
     label: 'layout.components.navigation.tabs.rules',
     path: '/rules',
     icon: [<ForkRightRoundedIcon key="mui" />, <RulesSvg key="svg" />],
     Component: RulesPage,
-  },
-  {
-    label: 'layout.components.navigation.tabs.logs',
-    path: '/logs',
-    icon: [<SubjectRoundedIcon key="mui" />, <LogsSvg key="svg" />],
-    Component: () => null /* KeepAlive: real LogsPage rendered in Layout */,
-  },
-  {
-    label: 'layout.components.navigation.tabs.unlock',
-    path: '/unlock',
-    icon: [<LockOpenRoundedIcon key="mui" />, <UnlockSvg key="svg" />],
-    Component: UnlockPage,
   },
   {
     label: 'layout.components.navigation.tabs.settings',
