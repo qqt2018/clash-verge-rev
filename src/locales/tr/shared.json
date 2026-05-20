@@ -1,5 +1,7 @@
 {
   "actions": {
+    "start": "Başlat",
+    "stop": "Durdur",
     "cancel": "İptal",
     "close": "Kapat",
     "confirm": "Onayla",

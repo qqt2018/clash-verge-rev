@@ -1,5 +1,7 @@
 {
   "actions": {
+    "start": "شروع",
+    "stop": "توقف",
     "cancel": "لغو",
     "close": "بستن",
     "confirm": "تأیید",

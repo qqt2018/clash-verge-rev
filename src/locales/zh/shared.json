@@ -1,5 +1,7 @@
 {
   "actions": {
+    "start": "启动",
+    "stop": "停止",
     "cancel": "取消",
     "close": "关闭",
     "confirm": "确认",

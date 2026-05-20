@@ -1,5 +1,7 @@
 {
   "actions": {
+    "start": "Iniciar",
+    "stop": "Detener",
     "cancel": "Cancelar",
     "close": "Cerrar",
     "confirm": "Confirmar",

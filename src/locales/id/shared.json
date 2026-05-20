@@ -1,5 +1,7 @@
 {
   "actions": {
+    "start": "Mulai",
+    "stop": "Berhenti",
     "cancel": "Batal",
     "close": "Tutup",
     "confirm": "Konfirmasi",
