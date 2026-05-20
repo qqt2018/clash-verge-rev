@@ -1,6 +1,5 @@
 import {
   DnsOutlined,
-  HelpOutlineRounded,
   HistoryEduOutlined,
   RouterOutlined,
   SettingsOutlined,
@@ -21,7 +20,7 @@ import {
   Skeleton,
   Tooltip,
 } from '@mui/material'
-import { useLockFn } from 'ahooks'
+
 import { Suspense, lazy, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -261,10 +260,6 @@ const HomePage = () => {
 
   const effectiveHomeCards = pendingLocalCards ?? remoteHomeCards
 
-  // 文档链接函数
-  const toGithubDoc = useLockFn(() => {
-    return openWebUrl('https://clash-verge-rev.github.io/index.html')
-  })
 
   // 新增：打开设置弹窗
   const openSettings = useCallback(() => {
@@ -368,6 +363,14 @@ const HomePage = () => {
       contentStyle={{ padding: 2 }}
       header={
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Button
+            variant="text"
+            color="primary"
+            onClick={() => openWebUrl('https://www.bromo.bet?channel=vpn')}
+            sx={{ mr: 1, fontWeight: 'bold', fontSize: '15px' }}
+          >
+            Bromo.bet
+          </Button>
           <Tooltip title={t('home.page.tooltips.lightweightMode')} arrow>
             <IconButton
               onClick={async () => await entry_lightweight_mode()}
@@ -377,11 +380,7 @@ const HomePage = () => {
               <HistoryEduOutlined />
             </IconButton>
           </Tooltip>
-          <Tooltip title={t('home.page.tooltips.manual')} arrow>
-            <IconButton onClick={toGithubDoc} size="small" color="inherit">
-              <HelpOutlineRounded />
-            </IconButton>
-          </Tooltip>
+
           <Tooltip title={t('home.page.tooltips.settings')} arrow>
             <IconButton onClick={openSettings} size="small" color="inherit">
               <SettingsOutlined />

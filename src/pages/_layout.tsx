@@ -28,9 +28,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Outlet, useLocation, useNavigate } from 'react-router'
 
-import iconDark from '@/assets/image/icon_dark.svg?react'
-import iconLight from '@/assets/image/icon_light.svg?react'
-import LogoSvg from '@/assets/image/logo.svg?react'
+import iconDark from '@/assets/image/icon_dark.png'
+import iconLight from '@/assets/image/icon_light.png'
+
 import { BaseErrorBoundary } from '@/components/base'
 import { LayoutItem } from '@/components/layout/layout-item'
 import { LayoutTraffic } from '@/components/layout/layout-traffic'
@@ -321,8 +321,9 @@ const Layout = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <SvgIcon
-                  component={isDark ? iconDark : iconLight}
+                <img
+                  src={isDark ? iconDark : iconLight}
+                  alt="icon"
                   style={{
                     height: '36px',
                     width: '36px',
@@ -330,9 +331,20 @@ const Layout = () => {
                     marginRight: '5px',
                     marginLeft: '-3px',
                   }}
-                  inheritViewBox
                 />
-                <LogoSvg fill={isDark ? 'white' : 'black'} />
+                <span
+                  style={{
+                    color: isDark ? 'white' : 'black',
+                    fontWeight: 800,
+                    fontSize: '18px',
+                    lineHeight: '30px',
+                    whiteSpace: 'nowrap',
+                    userSelect: 'none',
+                    fontFamily: 'system-ui, -apple-system, sans-serif'
+                  }}
+                >
+                  Bromo VPN
+                </span>
               </div>
               <UpdateButton className="the-newbtn" />
             </div>
