@@ -6,7 +6,7 @@ import {
   SettingsRounded,
   WarningRounded,
 } from '@mui/icons-material'
-import { Box, Typography, alpha, useTheme } from '@mui/material'
+import { Box, Button, Typography, alpha, useTheme } from '@mui/material'
 import { useLockFn } from 'ahooks'
 import React, { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -54,6 +54,7 @@ const SwitchRow = ({
   onError,
   highlight,
 }: SwitchRowProps) => {
+  const { t } = useTranslation()
   const theme = useTheme()
   const [checked, setChecked] = useState(active)
   const pendingRef = useRef(false)
@@ -114,12 +115,22 @@ const SwitchRow = ({
         {extraIcons}
       </Box>
 
-      <Switch
-        edge="end"
-        disabled={disabled}
-        checked={checked}
-        onChange={handleChange}
-      />
+      <Button
+        variant="contained"
+        disabled={disabled || pendingRef.current}
+        color={checked ? 'error' : 'success'}
+        size="large"
+        onClick={(e) => handleChange(e as any, !checked)}
+        sx={{
+          minWidth: 100,
+          fontWeight: 'bold',
+          borderRadius: 2,
+          boxShadow: checked ? 2 : 4,
+          py: 1,
+        }}
+      >
+        {checked ? t('shared.actions.stop') : t('shared.actions.start')}
+      </Button>
     </Box>
   )
 }
