@@ -8,11 +8,13 @@
     "cards": {
       "trafficStats": "トラフィック統計",
       "networkSettings": "ネットワーク設定",
-      "proxyMode": "プロキシモード"
+      "proxyMode": "プロキシモード",
+      "navigation": "サイトナビゲーション"
     },
     "settings": {
       "cards": {
         "profile": "プロファイルカード",
+        "navigation": "サイトナビゲーションカード",
         "currentProxy": "現在のプロキシカード",
         "network": "ネットワーク設定カード",
         "proxyMode": "プロキシモードカード",

@@ -8,11 +8,13 @@
     "cards": {
       "trafficStats": "Trafik İstatistikleri",
       "networkSettings": "Ağ Ayarları",
-      "proxyMode": "Vekil Modu"
+      "proxyMode": "Vekil Modu",
+      "navigation": "Site Navigasyonu"
     },
     "settings": {
       "cards": {
         "profile": "Profil Kartı",
+        "navigation": "Site Navigasyon Kartı",
         "currentProxy": "Geçerli Vekil Kartı",
         "network": "Ağ Ayarları Kartı",
         "proxyMode": "Vekil Modu Kartı",

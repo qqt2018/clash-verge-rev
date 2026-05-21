@@ -8,11 +8,13 @@
     "cards": {
       "trafficStats": "流量統計",
       "networkSettings": "網路設定",
-      "proxyMode": "代理模式"
+      "proxyMode": "代理模式",
+      "navigation": "站點導航"
     },
     "settings": {
       "cards": {
         "profile": "訂閱卡",
+        "navigation": "站點導航卡",
         "currentProxy": "目前代理卡",
         "network": "網路設定卡",
         "proxyMode": "代理模式卡",

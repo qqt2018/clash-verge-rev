@@ -1,6 +1,7 @@
 import {
   DnsOutlined,
   HistoryEduOutlined,
+  LanguageOutlined,
   RouterOutlined,
   SettingsOutlined,
   SpeedOutlined,
@@ -21,8 +22,9 @@ import {
   Tooltip,
 } from '@mui/material'
 
-import { Suspense, lazy, useCallback, useMemo, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import jsYaml from 'js-yaml'
 
 import { BasePage } from '@/components/base'
 import { ClashModeCard } from '@/components/home/clash-mode-card'
@@ -33,13 +35,9 @@ import { HomeProfileCard } from '@/components/home/home-profile-card'
 import { ProxyTunCard } from '@/components/home/proxy-tun-card'
 import { useProfiles } from '@/hooks/use-profiles'
 import { useVerge } from '@/hooks/use-verge'
-import { entry_lightweight_mode, openWebUrl } from '@/services/cmds'
+import { entry_lightweight_mode, openWebUrl, readProfileFile } from '@/services/cmds'
 
-const LazyTestCard = lazy(() =>
-  import('@/components/home/test-card').then((module) => ({
-    default: module.TestCard,
-  })),
-)
+
 const LazyIpInfoCard = lazy(() =>
   import('@/components/home/ip-info-card').then((module) => ({
     default: module.IpInfoCard,
@@ -66,7 +64,6 @@ interface HomeCardsSettings {
   info: boolean
   clashinfo: boolean
   systeminfo: boolean
-  test: boolean
   ip: boolean
   [key: string]: boolean
 }
@@ -126,6 +123,15 @@ const HomeSettingsDialog = ({
           <FormControlLabel
             control={
               <Checkbox
+                checked={cards.navigation || false}
+                onChange={() => handleToggle('navigation')}
+              />
+            }
+            label={t('home.page.settings.cards.navigation')}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
                 checked={cards.proxy || false}
                 onChange={() => handleToggle('proxy')}
               />
@@ -159,15 +165,7 @@ const HomeSettingsDialog = ({
             }
             label={t('home.page.settings.cards.traffic')}
           />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={cards.test || false}
-                onChange={() => handleToggle('test')}
-              />
-            }
-            label={t('home.page.settings.cards.tests')}
-          />
+
           <FormControlLabel
             control={
               <Checkbox
@@ -224,13 +222,13 @@ const HomePage = () => {
     () => ({
       info: false,
       profile: true,
+      navigation: true,
       proxy: true,
       network: true,
       mode: false,
       traffic: false,
       clashinfo: false,
       systeminfo: false,
-      test: false,
       ip: false,
     }),
     [],
@@ -285,6 +283,7 @@ const HomePage = () => {
         'profile',
         <HomeProfileCard current={current} onProfileUpdated={mutateProfiles} />,
       ),
+      renderCard('navigation', <SiteNavigationCard />),
       renderCard('network', <NetworkSettingsCard />),
       renderCard('proxy', <CurrentProxyCard />),
       renderCard('mode', <ClashModeEnhancedCard />),
@@ -316,6 +315,12 @@ const HomePage = () => {
   const nonCriticalCards = useMemo(
     () => [
       renderCard(
+        'ip',
+        <Suspense fallback={<Skeleton variant="rectangular" height={200} />}>
+          <LazyIpInfoCard />
+        </Suspense>,
+      ),
+      renderCard(
         'traffic',
         <EnhancedCard
           title={t('home.page.cards.trafficStats')}
@@ -325,18 +330,6 @@ const HomePage = () => {
           <EnhancedTrafficStats />
         </EnhancedCard>,
         12,
-      ),
-      renderCard(
-        'test',
-        <Suspense fallback={<Skeleton variant="rectangular" height={200} />}>
-          <LazyTestCard />
-        </Suspense>,
-      ),
-      renderCard(
-        'ip',
-        <Suspense fallback={<Skeleton variant="rectangular" height={200} />}>
-          <LazyIpInfoCard />
-        </Suspense>,
       ),
       renderCard(
         'clashinfo',
@@ -363,14 +356,7 @@ const HomePage = () => {
       contentStyle={{ padding: 2 }}
       header={
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Button
-            variant="text"
-            color="primary"
-            onClick={() => openWebUrl('https://www.bromo.bet?channel=vpn')}
-            sx={{ mr: 1, fontWeight: 'bold', fontSize: '15px' }}
-          >
-            Bromo.bet
-          </Button>
+
           <Tooltip title={t('home.page.tooltips.lightweightMode')} arrow>
             <IconButton
               onClick={async () => await entry_lightweight_mode()}
@@ -433,6 +419,90 @@ const ClashModeEnhancedCard = () => {
       action={null}
     >
       <ClashModeCard />
+    </EnhancedCard>
+  )
+}
+
+// 站点导航卡片组件
+const SiteNavigationCard = () => {
+  const { t } = useTranslation()
+  const { current } = useProfiles()
+  const [navs, setNavs] = useState<{ name: string; url: string }[]>([])
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (!current?.uid) {
+      setNavs([])
+      return
+    }
+
+    let isMounted = true
+    setLoading(true)
+
+    readProfileFile(current.uid)
+      .then((yamlStr) => {
+        if (!isMounted) return
+        try {
+          const parsed = jsYaml.load(yamlStr) as any
+          if (parsed && Array.isArray(parsed.sitenav)) {
+            setNavs(parsed.sitenav)
+          } else {
+            // 降级使用本地默认导航
+            setNavs([
+              { name: 'Bromo.bet', url: 'https://www.bromo.bet?channel=vpn' }
+            ])
+          }
+        } catch (e) {
+          console.error('Failed to parse profile yaml:', e)
+          setNavs([
+            { name: 'Bromo.bet', url: 'https://www.bromo.bet?channel=vpn' }
+          ])
+        } finally {
+          if (isMounted) setLoading(false)
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to read profile file:', err)
+        if (isMounted) {
+          setNavs([
+            { name: 'Bromo.bet', url: 'https://www.bromo.bet?channel=vpn' }
+          ])
+          setLoading(false)
+        }
+      })
+
+    return () => {
+      isMounted = false
+    }
+  }, [current?.uid])
+
+  return (
+    <EnhancedCard
+      title={t('home.page.cards.navigation')}
+      icon={<LanguageOutlined />}
+      iconColor="success"
+      action={null}
+    >
+      {loading ? (
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          <Skeleton variant="rectangular" width={80} height={30} sx={{ borderRadius: 1 }} />
+          <Skeleton variant="rectangular" width={80} height={30} sx={{ borderRadius: 1 }} />
+          <Skeleton variant="rectangular" width={80} height={30} sx={{ borderRadius: 1 }} />
+        </Box>
+      ) : (
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+          {navs.map((item) => (
+            <Button
+              key={item.name + item.url}
+              variant="outlined"
+              size="small"
+              onClick={() => openWebUrl(item.url)}
+            >
+              {item.name}
+            </Button>
+          ))}
+        </Box>
+      )}
     </EnhancedCard>
   )
 }

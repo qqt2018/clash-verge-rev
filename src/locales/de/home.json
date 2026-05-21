@@ -8,11 +8,13 @@
     "cards": {
       "trafficStats": "Verkehrsstatistik",
       "networkSettings": "Netzwerkeinstellungen",
-      "proxyMode": "Proxy-Modus"
+      "proxyMode": "Proxy-Modus",
+      "navigation": "Webseiten-Navigation"
     },
     "settings": {
       "cards": {
         "profile": "Abonnement-Karte",
+        "navigation": "Webseiten-Navigationskarte",
         "currentProxy": "Aktueller Proxy-Karte",
         "network": "Netzwerkeinstellungen-Karte",
         "proxyMode": "Proxy-Modus-Karte",

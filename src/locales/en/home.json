@@ -8,11 +8,13 @@
     "cards": {
       "trafficStats": "Traffic Stats",
       "networkSettings": "Network Settings",
-      "proxyMode": "Proxy Mode"
+      "proxyMode": "Proxy Mode",
+      "navigation": "Site Navigation"
     },
     "settings": {
       "cards": {
         "profile": "Profile Card",
+        "navigation": "Site Navigation Card",
         "currentProxy": "Current Proxy Card",
         "network": "Network Settings Card",
         "proxyMode": "Proxy Mode Card",

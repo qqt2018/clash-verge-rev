@@ -146,6 +146,7 @@ export interface TranslationResources {
       }
       page: {
         cards: {
+          navigation: string
           networkSettings: string
           proxyMode: string
           trafficStats: string
@@ -155,6 +156,7 @@ export interface TranslationResources {
             clashInfo: string
             currentProxy: string
             ip: string
+            navigation: string
             network: string
             profile: string
             proxyMode: string
@@ -1244,6 +1246,8 @@ export interface TranslationResources {
         retry: string
         save: string
         showDetails: string
+        start: string
+        stop: string
         tableView: string
         upgrade: string
       }

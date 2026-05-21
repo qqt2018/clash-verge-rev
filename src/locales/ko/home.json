@@ -8,11 +8,13 @@
     "cards": {
       "trafficStats": "트래픽 통계",
       "networkSettings": "네트워크 설정",
-      "proxyMode": "프록시 모드"
+      "proxyMode": "프록시 모드",
+      "navigation": "사이트 네비게이션"
     },
     "settings": {
       "cards": {
         "profile": "프로필 카드",
+        "navigation": "사이트 네비게이션 카드",
         "currentProxy": "현재 프록시 카드",
         "network": "네트워크 설정 카드",
         "proxyMode": "프록시 모드 카드",

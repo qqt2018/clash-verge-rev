@@ -8,11 +8,13 @@
     "cards": {
       "trafficStats": "Статистика трафика",
       "networkSettings": "Настройки сети",
-      "proxyMode": "Режим работы"
+      "proxyMode": "Режим работы",
+      "navigation": "Навигация по сайтам"
     },
     "settings": {
       "cards": {
         "profile": "Карточка профиля",
+        "navigation": "Карточка навигации",
         "currentProxy": "Карточка текущего прокси",
         "network": "Карточка сети",
         "proxyMode": "Карточка режима работы",
