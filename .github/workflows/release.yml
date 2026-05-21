@@ -592,5 +592,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  submit-to-winget:
-    if: ${{ !contains(github.ref_name, '-rc') }}
